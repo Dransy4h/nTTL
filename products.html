@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products - Nusantara Tunas Langgeng</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<style>
+    /* =========================================
+   ADD THIS TO THE BOTTOM OF YOUR STYLES.CSS
+   ========================================= */
+
+:root {
+    --primary: #1e40af;       /* Deep Blue */
+    --primary-light: #3b82f6; /* Bright Blue */
+    --secondary: #1e293b;     /* Dark Slate */
+    --accent: #eff6ff;        /* Light Blue Background */
+    --text-dark: #0f172a;
+    --text-gray: #64748b;
+    --white: #ffffff;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    color: var(--text-dark);
+    line-height: 1.5;
+    background-color: var(--white);
+    overflow-x: hidden;
+}
+
+* Navigation */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    transition: var(--transition);
+}
+
+.navbar.scrolled {
+    box-shadow: var(--shadow-sm);
+    padding: 0.5rem 0;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 1.25rem 2rem;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: var(--primary);
+}
+
+.logo-icon {
+    width: 40px;
+    height: 40px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 2.5rem;
+}
+
+.nav-links a {
+    font-weight: 500;
+    color: var(--text-gray);
+    transition: var(--transition);
+    position: relative;
+}
+
+.nav-links a:hover, .nav-links a.active {
+    color: var(--primary);
+}
+
+.nav-cta {
+    background: var(--primary);
+    color: var(--white);
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.nav-cta:hover {
+    background: var(--primary-light);
+    transform: translateY(-1px);
+}
+
+/* Page Header */
+.page-header {
+    background-color: var(--secondary);
+    padding: 8rem 0 4rem; /* Accounts for fixed navbar */
+    position: relative;
+    overflow: hidden;
+    color: var(--white);
+    text-align: center;
+}
+
+.page-header-bg {
+    position: absolute;
+    inset: 0;
+    opacity: 0.1;
+    background-image: radial-gradient(circle at 20% 50%, var(--primary-light) 0%, transparent 25%),
+                      radial-gradient(circle at 80% 50%, var(--primary) 0%, transparent 25%);
+}
+
+.page-header-content {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.page-tag {
+    display: inline-block;
+    color: var(--primary-light);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+}
+
+.page-header h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+}
+
+.page-header p {
+    color: #94a3b8;
+    font-size: 1.25rem;
+}
+
+/* Category Tabs (Filtering) */
+.product-categories {
+    padding: 3rem 0;
+    background: var(--white);
+    position: sticky;
+    top: 70px; /* Below navbar */
+    z-index: 90;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.category-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.category-tab {
+    padding: 0.75rem 1.5rem;
+    border-radius: 2rem;
+    border: 1px solid #e2e8f0;
+    background: var(--white);
+    color: var(--text-gray);
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.category-tab:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.category-tab.active {
+    background: var(--primary);
+    color: var(--white);
+    border-color: var(--primary);
+}
+
+/* Products Grid Layout */
+.products-section {
+    padding: 4rem 0;
+    background: #f8fafc;
+    min-height: 600px;
+}
+
+.products-full-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 2.5rem;
+}
+
+/* Full Product Card Styling */
+.product-full-card {
+    background: var(--white);
+    border-radius: 1rem;
+    border: 1px solid #e2e8f0;
+    overflow: hidden;
+    transition: var(--transition);
+    display: flex; /* Flex required for column layout */
+    flex-direction: column;
+}
+
+.product-full-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary-light);
+}
+
+/* Filtering Animation Class */
+.product-full-card.hide {
+    display: none;
+}
+
+.product-full-card.show {
+    animation: fadeIn 0.5s ease forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.product-full-image {
+    height: 260px;
+    background: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 2rem;
+}
+
+.product-full-image svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.05));
+    transition: var(--transition);
+}
+
+.product-full-card:hover .product-full-image svg {
+    transform: scale(1.05);
+}
+
+.product-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: var(--secondary);
+    color: var(--white);
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    z-index: 10;
+}
+
+.product-full-content {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.product-type {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--primary);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+}
+
+.product-full-content h3 {
+    font-size: 1.5rem;
+    color: var(--secondary);
+    margin-bottom: 0.75rem;
+}
+
+.product-full-content p {
+    color: var(--text-gray);
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.product-features {
+    margin-bottom: 2rem;
+    padding-left: 1rem;
+}
+
+.product-features li {
+    position: relative;
+    color: var(--text-dark);
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    padding-left: 1rem;
+}
+
+.product-features li::before {
+    content: "•";
+    color: var(--primary);
+    font-weight: bold;
+    position: absolute;
+    left: -0.5rem;
+}
+
+.product-full-content .btn {
+    margin-top: auto; /* Pushes button to bottom */
+    width: 100%;
+    justify-content: center;
+}
+
+/* Technical Support Section */
+.tech-support {
+    padding: 6rem 0;
+    background: var(--white);
+    border-top: 1px solid #e2e8f0;
+}
+
+.tech-support-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.tech-support-text h2 {
+    font-size: 2.25rem;
+    color: var(--secondary);
+    margin: 1rem 0 1.5rem;
+}
+
+.tech-support-list {
+    margin: 2rem 0;
+}
+
+.tech-support-list li {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    font-weight: 500;
+    color: var(--text-dark);
+}
+
+.tech-support-list svg {
+    width: 20px;
+    height: 20px;
+    color: var(--primary);
+}
+
+.tech-support-visual {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.support-card {
+    padding: 2rem;
+    background: #f8fafc;
+    border-radius: 1rem;
+    text-align: center;
+    border: 1px solid #e2e8f0;
+    transition: var(--transition);
+}
+
+.support-card:hover {
+    border-color: var(--primary);
+    transform: translateY(-5px);
+}
+
+.support-icon {
+    width: 48px;
+    height: 48px;
+    background: var(--white);
+    color: var(--primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.support-icon svg {
+    width: 24px;
+    height: 24px;
+}
+
+.support-card h4 {
+    color: var(--secondary);
+    margin-bottom: 0.5rem;
+}
+
+.support-card p {
+    color: var(--text-gray);
+    font-size: 0.9rem;
+}
+
+/* Responsive Adjustments for Products Page */
+@media (max-width: 768px) {
+    .page-header h1 {
+        font-size: 2rem;
+    }
+    
+    .tech-support-content {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+    
+    .products-full-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+</style>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="40" height="40" rx="8" fill="#1e40af"/>
+                        <path d="M12 20C12 15.5817 15.5817 12 20 12V12C24.4183 12 28 15.5817 28 20V28H20C15.5817 28 12 24.4183 12 20V20Z" fill="white"/>
+                        <circle cx="20" cy="20" r="4" fill="#1e40af"/>
+                    </svg>
+                </div>
+                <span class="logo-text">Nusantara Tunas Langgeng</span>
+            </a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html" class="active">Products</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <a href="contact.html" class="nav-cta">Get Quote</a>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="page-header-bg"></div>
+        <div class="container">
+            <div class="page-header-content">
+                <span class="page-tag">Our Products</span>
+                <h1>Industrial Adhesive Solutions</h1>
+                <p>Comprehensive range of high-performance adhesives designed for diverse industrial applications.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Categories -->
+    <section class="product-categories">
+        <div class="container">
+            <div class="category-tabs">
+                <button class="category-tab active" data-category="all">All Products</button>
+                <button class="category-tab" data-category="construction">Construction</button>
+                <button class="category-tab" data-category="manufacturing">Manufacturing</button>
+                <button class="category-tab" data-category="packaging">Packaging</button>
+                <button class="category-tab" data-category="specialty">Specialty</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Grid -->
+    <section class="products-section">
+        <div class="container">
+            <div class="products-full-grid" id="productsGrid">
+                <!-- Construction Products -->
+                <div class="product-full-card" data-category="construction">
+                    <div class="product-full-image">
+                        <div class="product-badge">Best Seller</div>
+                        <svg viewBox="0 0 120 120" fill="none">
+                            <rect width="120" height="120" rx="16" fill="#eff6ff"/>
+                            <rect x="30" y="40" width="60" height="50" rx="6" fill="#3b82f6"/>
+                            <rect x="38" y="30" width="44" height="15" rx="3" fill="#1e40af"/>
+                            <path d="M50 60L60 80L70 60" stroke="white" stroke-width="3" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <div class="product-full-content">
+                        <span class="product-type">Construction</span>
+                        <h3>NTL-STRUCT 5000</h3>
+                        <p>High-performance structural adhesive for concrete, steel, and composite bonding. Excellent for load-bearing applications.</p>
+                        <ul class="product-features">
+                            <li>Tensile Strength: 25 MPa</li>
+                            <li>Cure Time: 24 hours</li>
+                            <li>Temperature Range: -40°C to 120°C</li>
+                        </ul>
+                        <a href="contact.html" class="btn btn-primary">Request Quote</a>
+                    </div>
+                </div>
+
+                <div class="product-full-card" data-category="construction">
+                    <div class="product-full-image">
+                        <svg viewBox="0 0 120 120" fill="none">
+                            <rect width="120" height="120" rx="16" fill="#eff6ff"/>
+                            <rect x="25" y="50" width="70" height="40" rx="4" fill="#3b82f6"/>
+                            <rect x="35" y="35" width="50" height="20" rx="4" fill="#1e40af"/>
+                            <circle cx="60" cy="70" r="10" fill="white"/>
+                        </svg>
+                    </div>
+                    <div class="product-full-content">
+                        <span class="product-type">Construction</span>
+                        <h3>NTL-TILE PRO</h3>
+                        <p>Premium tile adhesive for ceramic, porcelain, and natural stone. Flexible formula prevents cracking.</p>
+                        <ul class="product-features">
+                            <li>Coverage: 4-5 kg/m²</li>
+                            <li>Open Time: 30 minutes</li>
+                            <li>Suitable for floor heating</li>
+                        </ul>
+                        <a href="contact.html" class="btn btn-primary">Request Quote</a>
+                    </div>
+                </div>
+
+                <div class="product-full-card" data-category="construction">
+                    <div class="product-full-image">
+                        <svg viewBox="0 0 120 120" fill="none">
+                            <rect width="120" height="120" rx="16" fill="#eff6ff"/>
+                            <path d="M30 90L60 30L90 90H30Z" fill="#3b82f6"/>
+                            <path d="M45 90L60 50L75 90H45Z" fill="#1e40af"/>
+                            <circle cx="60" cy="70" r="8" fill="white"/>
+                        </svg>
+                    </div>
+                    <div class="product-full-content">
+                        <span class="product-type">Construction</span>
+                        <h3>NTL-SEAL MASTER</h3>
+                        <p>Polyurethane sealant for expansion joints and weatherproofing. Excellent UV and weather resistance.</p>
+                        <ul class="product-features">
+                            <li>Elongation: 600%</li>
+                            <li>Paintable after cure</li>
+                            <li>25-year durability</li>
+                        </ul>
+                        <a href="contact.html" class="btn btn-primary">Request Quote</a>
+                    </div>
+                </div>
+
+                <!-- Manufacturing Products -->
+                <div class="product-full-card" data-category="manufacturing">
+                    <div class="product-full-image">
+                        <div class="product-badge">New</div>
+                        <svg viewBox="0 0 120 120" fill="none">
+                            <rect width="120" height="120" rx="16" fill="#eff6ff"/>
+                            <circle cx="60" cy="60" r="35" fill="#3b82f6"/>
+                            <circle cx="60" cy="60" r="20" fill="#1e40af"/>
+                            <circle cx="60" cy="60" r="8" fill="white"/>
+                        </svg>
+                    </div>
+                    <div class="product-full-content">
+                        <span class="product-type">Manufacturing</span>
+                        <h3>NTL-EPOXY 2K</h3>
+                        <p>Two-component industrial epoxy for metal, plastic, and composite bonding in manufacturing environments.</p>
+                        <ul class="product-features">
+                            <li>Shear Strength: 30 MPa</li>
+                            <li>Mix Ratio: 1:1</li>
+                            <li>Chemical resistant</li>
+                        </ul>
+                        <a href="contact.html" class="btn btn-primary">Request Quote</a>
+                    </div>
+                </div>
+
+                <div class="product-full-card" data-category="manufacturing">
+                    <div class="product-full-image">
+                        <svg viewBox="0 0 120 120" fill="none">
+                            <rect width="120" height="120" rx="16" fill="#eff6ff"/>
+                            <rect x="35" y="30" width="50" height="60" rx="6" fill="#3b82f6"/>
+                            <rect x="45" y="40" width="30" height="40" rx="4" fill="#1e40af"/>
+                            <path d="M55 55L65 70" stroke="white" stroke-width="3" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <div class="product-full-content">
+                        <span class="product-type">Manufacturing</span>
+                        <h3>NTL-CYANO RAPID</h3>
+                        <p>Industrial-grade cyanoacrylate for instant bonding. Perfect for assembly line applications.</p>
+                        <ul class="product-features">
+                            <li>Bond Time: 5-20 seconds</li>
+                            <li>Viscosity options available</li>
+                            <li>Gap-filling grades</li>
+                        </ul>
+                        <a href="contact.html" class="btn btn-primary">Request Quote</a>
+                    </div>
+                </div>
+
+                <div class="product-full-card" data-category="manufacturing">
+                    <div class="product-full-image">
+                        <svg viewBox="0 0 120 120" fill="none">
+                            <rect width="120" height="120" rx="16" fill="#eff6ff"/>
+                            <rect x="25" y="45" width="70" height="35" rx="6" fill="#3b82f6"/>
+                            <rect x="40" y="35" width="40" height="15" rx="3" fill="#1e40af"/>
+                            <rect x="50" y="55" width="20" height="15" rx="2" fill="white"/>
+                        </svg>
+                    </div>
+                    <div class="product-full-content">
+                        <span class="product-type">Manufacturing</span>
+                        <h3>NTL-THREAD LOCK</h3>
+                        <p>Anaerobic thread locking compound for preventing loosening of threaded fasteners under vibration.</p>
+                        <ul class="product-features">
+                            <li>Breakaway Torque: 8-25 Nm</li>
+                            <li>Temperature: -55°C to 150°C</li>
+                            <li>Oil tolerant formula</li>
+                        </ul>
+                        <a href="contact.html" class="btn btn-primary">Request Quote</a>
+                    </div>
+                </div>
+
+                <!-- Packaging Products -->
+                <div class="product-full-card" data-category="packaging">
+                    <div class="product-full-image">
+                        <div class="product-badge">Popular</div>
+                        <svg viewBox="0 0 120 120" fill="none">
+                            <rect width="120" height="120" rx="16" fill="#eff6ff"/>
+                            <rect x="30" y="35" width="60" height="55" rx="6" fill="#3b82f6"/>
+                            <path d="M30 50H90" stroke="#1e40af" stroke-width="4"/>
+                            <rect x="50" y="60" width="20" height="20" rx="2" fill="white"/>
+                        </svg>
+                    </div>
+                    <div class="product-full-content">
+                        <span class="product-type">Packaging</span>
+                        <h3>NTL-HOTMELT 300</h3>
+                        <p>EVA-based hot melt adhesive for carton sealing and packaging. Fast set time for high-speed lines.</p>
+                        <ul class="product-features">
+                            <li>Application Temp: 160-180°C</li>
+                            <li>Open Time: 3-5 seconds</li>
+                            <li>Excellent fiber tear</li>
+                        </ul>
+                        <a href="contact.html" class="btn btn-primary">Request Quote</a>
+                    </div>
+                </div>
+
+                <div class="product-full-card" data-category="packaging">
+                    <div class="product-full-image">
+                        <svg viewBox="0 0 120 120" fill="none">
+                            <rect width="120" height="120" rx="16" fill="#eff6ff"/>
+                            <ellipse cx="60" cy="60" rx="35" ry="25" fill="#3b82f6"/>
+                            <ellipse cx="60" cy="60" rx="20" ry="12" fill="#1e40af"/>
+                            <ellipse cx="60" cy="60" rx="8" ry="5" fill="white"/>
+                        </svg>
+                    </div>
+                    <div class="product-full-content">
+                        <span class="product-type">Packaging</span>
+                        <h3>NTL-LABEL STICK</h3>
+                        <p>Pressure-sensitive adhesive for label applications. Permanent and removable options available.</p>
+                        <ul class="product-features">
+                            <li>Tack: Excellent initial grab</li>
+                            <li>FDA compliant options</li>
+                            <li>Clear and opaque grades</li>
+                        </ul>
+                        <a href="contact.html" class="btn btn-primary">Request Quote</a>
+                    </div>
+                </div>
+
+                <div class="product-full-card" data-category="packaging">
+                    <div class="product-full-image">
+                        <svg viewBox="0 0 120 120" fill="none">
+                            <rect width="120" height="120" rx="16" fill="#eff6ff"/>
+                            <path d="M35 80L60 35L85 80H35Z" fill="#3b82f6"/>
+                            <path d="M48 80L60 50L72 80H48Z" fill="#1e40af"/>
+                        </svg>
+                    </div>
+                    <div class="product-full-content">
+                        <span class="product-type">Packaging</span>
+                        <h3>NTL-LAMINATE PRO</h3>
+                        <p>Laminating adhesive for flexible packaging. Excellent bond strength and clarity.</p>
+                        <ul class="product-features">
+                            <li>Solvent-free options</li>
+                            <li>High heat resistance</li>
+                            <li>Food-grade certified</li>
+                        </ul>
+                        <a href="contact.html" class="btn btn-primary">Request Quote</a>
+                    </div>
+                </div>
+
+                <!-- Specialty Products -->
+                <div class="product-full-card" data-category="specialty">
+                    <div class="product-full-image">
+                        <div class="product-badge">Premium</div>
+                        <svg viewBox="0 0 120 120" fill="none">
+                            <rect width="120" height="120" rx="16" fill="#eff6ff"/>
+                            <polygon points="60,25 75,50 100,55 82,75 87,100 60,87 33,100 38,75 20,55 45,50" fill="#3b82f6"/>
+                            <circle cx="60" cy="60" r="15" fill="#1e40af"/>
+                            <circle cx="60" cy="60" r="6" fill="white"/>
+                        </svg>
+                    </div>
+                    <div class="product-full-content">
+                        <span class="product-type">Specialty</span>
+                        <h3>NTL-AERO BOND</h3>
+                        <p>Aerospace-grade structural adhesive meeting stringent aviation industry standards.</p>
+                        <ul class="product-features">
+                            <li>FAA/EASA approved</li>
+                            <li>Fatigue resistant</li>
+                            <li>Service temp: -55°C to 177°C</li>
+                        </ul>
+                        <a href="contact.html" class="btn btn-primary">Request Quote</a>
+                    </div>
+                </div>
+
+                <div class="product-full-card" data-category="specialty">
+                    <div class="product-full-image">
+                        <svg viewBox="0 0 120 120" fill="none">
+                            <rect width="120" height="120" rx="16" fill="#eff6ff"/>
+                            <rect x="30" y="40" width="25" height="40" rx="4" fill="#3b82f6"/>
+                            <rect x="65" y="40" width="25" height="40" rx="4" fill="#3b82f6"/>
+                            <rect x="55" y="50" width="10" height="20" rx="2" fill="#1e40af"/>
+                        </svg>
+                    </div>
+                    <div class="product-full-content">
+                        <span class="product-type">Specialty</span>
+                        <h3>NTL-ELECTRO SAFE</h3>
+                        <p>Electrically conductive and thermally conductive adhesives for electronics assembly.</p>
+                        <ul class="product-features">
+                            <li>Volume Resistivity: 10⁻⁴ Ω·cm</li>
+                            <li>Thermal conductivity: 3 W/mK</li>
+                            <li>ESD safe handling</li>
+                        </ul>
+                        <a href="contact.html" class="btn btn-primary">Request Quote</a>
+                    </div>
+                </div>
+
+                <div class="product-full-card" data-category="specialty">
+                    <div class="product-full-image">
+                        <svg viewBox="0 0 120 120" fill="none">
+                            <rect width="120" height="120" rx="16" fill="#eff6ff"/>
+                            <circle cx="60" cy="55" r="25" fill="#3b82f6"/>
+                            <path d="M45 85H75L70 70H50L45 85Z" fill="#1e40af"/>
+                            <circle cx="60" cy="55" r="10" fill="white"/>
+                        </svg>
+                    </div>
+                    <div class="product-full-content">
+                        <span class="product-type">Specialty</span>
+                        <h3>NTL-MEDICAL BOND</h3>
+                        <p>Biocompatible adhesives for medical device assembly. USP Class VI certified.</p>
+                        <ul class="product-features">
+                            <li>ISO 10993 compliant</li>
+                            <li>Sterilization resistant</li>
+                            <li>Low outgassing</li>
+                        </ul>
+                        <a href="contact.html" class="btn btn-primary">Request Quote</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technical Support Section -->
+    <section class="tech-support">
+        <div class="container">
+            <div class="tech-support-content">
+                <div class="tech-support-text">
+                    <span class="section-tag">Technical Support</span>
+                    <h2>Need Help Choosing the Right Adhesive?</h2>
+                    <p>Our team of technical experts is available to help you select the optimal adhesive solution for your specific application requirements.</p>
+                    <ul class="tech-support-list">
+                        <li>
+                            <svg viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                            </svg>
+                            Free technical consultation
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                            </svg>
+                            Sample testing available
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                            </svg>
+                            Custom formulation services
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                            </svg>
+                            On-site application support
+                        </li>
+                    </ul>
+                    <a href="contact.html" class="btn btn-primary">Contact Technical Team</a>
+                </div>
+                <div class="tech-support-visual">
+                    <div class="support-card">
+                        <div class="support-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                            </svg>
+                        </div>
+                        <h4>Call Us</h4>
+                        <p>+62 21 123 456</p>
+                    </div>
+                    <div class="support-card">
+                        <div class="support-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                            </svg>
+                        </div>
+                        <h4>Email Us</h4>
+                        <p>technical@ntl-adhesive.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="footer-logo">
+                        <div class="logo-icon">
+                            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="40" height="40" rx="8" fill="#3b82f6"/>
+                                <path d="M12 20C12 15.5817 15.5817 12 20 12V12C24.4183 12 28 15.5817 28 20V28H20C15.5817 28 12 24.4183 12 20V20Z" fill="white"/>
+                                <circle cx="20" cy="20" r="4" fill="#3b82f6"/>
+                            </svg>
+                        </div>
+                        <span>Nusantara Tunas Langgeng</span>
+                    </a>
+                    <p class="footer-description">Leading manufacturer of industrial adhesives, providing bonding solutions for construction, manufacturing, and packaging industries since 1999.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="products.html">Products</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Products</h4>
+                    <ul>
+                        <li><a href="products.html">Structural Adhesives</a></li>
+                        <li><a href="products.html">Industrial Epoxy</a></li>
+                        <li><a href="products.html">Hot Melt Adhesives</a></li>
+                        <li><a href="products.html">Specialty Adhesives</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact Us</h4>
+                    <ul>
+                        <li>
+                            <svg viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                            </svg>
+                            <span>Jakarta, Indonesia</span>
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
+                            </svg>
+                            <span>+62 21 123 456</span>
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+                                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+                            </svg>
+                            <span>info@ntl-adhesive.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Nusantara Tunas Langgeng. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+    
+    /* ----------------------------------------------------------------
+       1. Navbar Scroll Effect & Mobile Menu (Shared Logic)
+    ---------------------------------------------------------------- */
+    const navbar = document.getElementById('navbar');
+    const mobileBtn = document.getElementById('mobileMenuBtn');
+    const navLinks = document.getElementById('navLinks');
+
+    // Scroll Effect
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 20) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    });
+
+    // Mobile Menu Toggle
+    if (mobileBtn) {
+        mobileBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            
+            const spans = mobileBtn.querySelectorAll('span');
+            if (navLinks.classList.contains('active')) {
+                spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+                spans[1].style.opacity = '0';
+                spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
+            } else {
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+            }
+        });
+    }
+
+    /* ----------------------------------------------------------------
+       2. Product Filtering Logic (New for Products Page)
+    ---------------------------------------------------------------- */
+    const filterBtns = document.querySelectorAll('.category-tab');
+    const productItems = document.querySelectorAll('.product-full-card');
+
+    if (filterBtns.length > 0) {
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // 1. Remove active class from all buttons
+                filterBtns.forEach(b => b.classList.remove('active'));
+                // 2. Add active class to clicked button
+                btn.classList.add('active');
+
+                // 3. Get the filter value
+                const filterValue = btn.getAttribute('data-category');
+
+                // 4. Loop through items and show/hide
+                productItems.forEach(item => {
+                    if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+                        item.classList.remove('hide');
+                        item.classList.add('show');
+                        // Reset animation
+                        item.style.animation = 'none';
+                        item.offsetHeight; /* trigger reflow */
+                        item.style.animation = null; 
+                    } else {
+                        item.classList.remove('show');
+                        item.classList.add('hide');
+                    }
+                });
+            });
+        });
+    }
+
+    /* ----------------------------------------------------------------
+       3. Number Counter Animation (Only if elements exist)
+    ---------------------------------------------------------------- */
+    const stats = document.querySelectorAll('.stat-number');
+    if (stats.length > 0) {
+        const observerOptions = { threshold: 0.5 };
+        const statsObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                const target = entry.target;
+                const targetValue = parseInt(target.getAttribute('data-target'));
+                const duration = 2000; 
+                const stepTime = 20;   
+                const steps = duration / stepTime;
+                const increment = targetValue / steps;
+                
+                let current = 0;
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= targetValue) {
+                        target.textContent = targetValue;
+                        clearInterval(timer);
+                    } else {
+                        target.textContent = Math.ceil(current);
+                    }
+                }, stepTime);
+                observer.unobserve(target);
+            });
+        }, observerOptions);
+        stats.forEach(stat => statsObserver.observe(stat));
+    }
+
+    /* ----------------------------------------------------------------
+       4. Smooth Scrolling
+    ---------------------------------------------------------------- */
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            const targetId = this.getAttribute('href');
+            if (targetId === '#' || targetId.includes('.html')) return; // Ignore actual page links
+            
+            e.preventDefault();
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                if (navLinks.classList.contains('active')) mobileBtn.click();
+            }
+        });
+    });
+});
+
+    </script>
+</body>
+</html>
